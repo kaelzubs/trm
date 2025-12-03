@@ -5,6 +5,8 @@ from django.urls import reverse
 class Category(models.Model):
     name = models.CharField(max_length=120, unique=True)
     slug = models.SlugField(max_length=140, unique=True, blank=True)
+    aliexpress_id = models.BigIntegerField(unique=True)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='children')
     
     class Meta:
         verbose_name_plural = "categories"
@@ -23,6 +25,7 @@ class CategoryImage(models.Model):
         return f"Image for {self.category.name}"
 
 class Product(models.Model):
+    aliexpress_id = models.CharField(max_length=255, unique=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True, blank=True)

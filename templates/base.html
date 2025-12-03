@@ -5,12 +5,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Shop{% endblock %}</title>
+  <title>{% block title %}TRM Limited{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap 4 CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <link href="{% static 'img/favicon.png' %}" type="image/png" rel="icon">
+  <link href="{% static 'img/TECHRIDE-LOGO-transp.png' %}" type="image/png" rel="icon">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
   <style>
     /* Full-screen overlay */
@@ -51,8 +51,8 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
-    <a class="navbar-brand text-white font-weight-bolder" href="{% url 'core:home' %}">DropXpress</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-top">
+    <a class="navbar-brand text-white font-weight-bolder" href="{% url 'core:home' %}">TechRideMobile</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -107,9 +107,9 @@
       <div class="row">
         <!-- Brand -->
         <div class="col-md-3 mb-4">
-          <h5 class="font-weight-bold">DropXpress</h5>
-          <p class="small">Your trusted dropshipping partner worldwide.</p>
-          <img src="{% static 'img/logo.png' %}" alt="YourStore Logo" height="50">
+          <h5 class="font-weight-bold">TechRideMobile Ltd.</h5>
+          <p class="small">Your trusted online shopping store worldwide.</p>
+          <img src="{% static 'img/TECHRIDE-LOGO-transp.png' %}" alt="YourStore Logo" height="50">
         </div>
 
         <!-- Quick Links -->
@@ -141,7 +141,7 @@
             <div class="input-group w-100 mb-2">
               <input type="email" name='email' class="form-control" placeholder="Your email">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Subscribe</button>
+                <button class="btn btn-success" type="submit">Subscribe</button>
               </div>
             </div>
           </form>

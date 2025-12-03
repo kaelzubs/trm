@@ -10,7 +10,7 @@
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Search products..." 
                    value="{{ request.GET.q|default:'' }}">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-success">Search</button>
         </div>
     </form>
     {% if query %}
@@ -37,7 +37,7 @@
                               <h5 class="card-title">{{ product.title }}</h5>
                             </div>
                             <p class="card-text">₦{{ product.price|floatformat:2|intcomma }}</p>
-                            <a href="{% url 'catalog:search' %}" class="btn btn-sm btn-primary">View</a>
+                            <a href="{% url 'catalog:search' %}" class="btn btn-sm btn-success">View</a>
                           </div>
                       </div>
                     </div>

@@ -7,7 +7,7 @@
     <!-- Cart Items -->
     <div class="col-lg-8 mb-4">
       <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-success text-white">
           <h3 class="mb-0">Your Cart</h3>
         </div>
         <div class="card-body p-0">
@@ -70,7 +70,7 @@
             <span>Total:</span>
             <span>₦{{ totals.total|floatformat:2|intcomma }}</span>
           </p>
-          <a class="btn btn-primary btn-block mt-3"
+          <a class="btn btn-success btn-block mt-3"
              href="{% url 'orders:checkout' %}">
             Proceed to Checkout
           </a>

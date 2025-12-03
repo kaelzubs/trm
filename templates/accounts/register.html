@@ -27,7 +27,7 @@
               <div class="input-group">
                 {{ form.password1 }}
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-primary" id="togglePwd1">Show</button>
+                  <button type="button" class="btn btn-outline-success" id="togglePwd1">Show</button>
                 </div>
               </div>
               {{ form.password1.errors }}
@@ -38,12 +38,12 @@
               <div class="input-group">
                 {{ form.password2 }}
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-primary" id="togglePwd2">Show</button>
+                  <button type="button" class="btn btn-outline-success" id="togglePwd2">Show</button>
                 </div>
               </div>
               {{ form.password2.errors }}
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn-success btn-block">Register</button>
             <div class="text-center my-3">
               {% if 'google' in socialaccount_providers %}
                 <a href="{% provider_login_url 'google' %}" 
@@ -56,7 +56,7 @@
 
               {% if 'facebook' in socialaccount_providers %}
                 <a href="{% provider_login_url 'facebook' %}" 
-                  class="btn btn-primary btn-block">
+                  class="btn btn-success btn-block">
                   <i class="fab fa-facebook-f mr-2"></i> Login with Facebook
                 </a>
               {% else %}

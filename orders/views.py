@@ -3,21 +3,14 @@ from django.contrib import messages
 from .cart import Cart
 from .forms import CheckoutForm
 from .models import Order, OrderItem, Address
-from catalog.models import Product
-import stripe
-import os
 from django.conf import settings
 from pathlib import Path
 from dotenv import load_dotenv
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
-
-# stripe.api_key =  'STRIPE_API_KEY'  # env var in production
-stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 def cart_detail(request):
     cart = Cart(request)

@@ -43,7 +43,7 @@ DEBUG=os.getenv('DEBUG', 'True') == 'True'
 if DEBUG == True:
     ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
-ALLOWED_HOSTS = ['kaelzubs.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['kaelzubs.pythonanywhere.com', '127.0.0.1', 'kael.pythonanywhere.com']
 
 # Application defini
 INSTALLED_APPS = [

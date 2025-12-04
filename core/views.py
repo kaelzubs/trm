@@ -12,7 +12,7 @@ CONSENT_COOKIE_NAME = "cookie_consent"
 CONSENT_MAX_AGE = 365 * 24 * 60 * 60  # one year
 
 def home(request):
-    products = Product.objects.filter(is_active=True)[:8]
+    products = Product.objects.filter(is_active=True)[:40]  # Show latest 32 products
     return render(request, 'core/home.html', {'products': products})
 
 

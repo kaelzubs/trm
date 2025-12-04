@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterAPIView, register, verify_email, jwt_login, logout_template, password_reset_request, password_reset_confirm, newsletter_subscribe, mailchimp_failed, mailchimp_confirm, contact
+from .views import RegisterAPIView, register, verify_email, jwt_login, logout_template, password_reset_request, password_reset_confirm, newsletter_subscribe, mailchimp_failed, mailchimp_confirm, contact, social_login
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 app_name = 'accounts'
@@ -19,4 +19,5 @@ urlpatterns = [
     path("newsletter/failed/", mailchimp_failed, name="mailchimp_failed"),
     path("newsletter/confirmed/", mailchimp_confirm, name="mailchimp_confirm"),
     path('contact', contact, name='contact'),
+    path('social/', social_login, name='social_login'),
 ]

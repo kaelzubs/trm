@@ -255,3 +255,7 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, "accounts/contact.html", {"form": form})
+
+def social_login(request):
+    """Display social login options (Google, Facebook)"""
+    return render(request, "accounts/social_login.html")

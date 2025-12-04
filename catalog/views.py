@@ -13,7 +13,7 @@ def category_list(request, category_slug=None):
         products = products.filter(category=category, is_active=True).order_by('-id')
         
     # products = Product.objects.all().order_by('-id')   # or any ordering you prefer
-    paginator = Paginator(products, 4)  # 12 products per page
+    paginator = Paginator(products, 20)  # 12 products per page
     page_number = request.GET.get("page")
     try:
         page_obj = paginator.get_page(page_number)
@@ -42,7 +42,7 @@ def product_list(request, category_slug=None):
         products = products.filter(category=category, is_active=True).order_by('-id')
     
     # products = Product.objects.all().order_by('-id')   # or any ordering you prefer
-    paginator = Paginator(products, 4)  # 12 products per page
+    paginator = Paginator(products, 20)  # 12 products per page
     page_number = request.GET.get("page")
     try:
         page_obj = paginator.get_page(page_number)
@@ -68,7 +68,7 @@ def search_product(request):
         products = products.filter(Q(title__icontains=query) |
                                    Q(description__icontains=query)).distinct() # adjust field as needed
 
-    paginator = Paginator(products, 1)  # 12 results per page
+    paginator = Paginator(products, 20)  # 12 results per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
         

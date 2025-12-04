@@ -25,6 +25,10 @@ from django.views.generic.base import RedirectView
 from django.contrib.sitemaps.views import sitemap
 from shop.sitemaps import ProductSitemap, CategorySitemap, StaticViewSitemap
 
+admin.site.site_header = "TechRideMobile Ltd Administration"
+admin.site.site_title = "TechRideMobile Ltd Portal"
+admin.site.index_title = "Welcome to TechRideMobile Ltd Admin"
+
 sitemaps_dict = {
     "products": ProductSitemap,
     "categories": CategorySitemap,
@@ -51,7 +55,8 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('suppliers/', include('suppliers.urls')),
     path('accounts/', include('accounts.urls', namespace="accounts")),
-    path('favicon.ico/', RedirectView.as_view(url=staticfiles_storage.url('img/favicon.png'))),
+    path('accounts/', include('allauth.urls')),  # Django-allauth social auth URLs
+    path('favicon.ico/', RedirectView.as_view(url=staticfiles_storage.url('img/trm.png'))),
     path("sitemap.xml/", sitemap, {"sitemaps": sitemaps_dict}, name="django_sitemap"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

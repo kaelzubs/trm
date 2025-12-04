@@ -1,5 +1,7 @@
 from decimal import Decimal
 from catalog.models import Product
+from orders.shipping import calculate_shipping
+
 
 class Cart: 
     def __init__(self, request):
@@ -43,8 +45,31 @@ class Cart:
                 'line_total': Decimal(data['price']) * data['quantity'],
             }
 
-    def totals(self):
-        subtotal = sum(Decimal(i['price']) * i['quantity'] for i in self.items())
-        shipping = Decimal('0')  # flat or calculated later
+    def totals(self, shipping_method="standard", destination_state=None):
+        """
+        Calculate cart totals including dynamic shipping.
+        
+        Args:
+            shipping_method: 'standard', 'express', or 'economy'
+            destination_state: customer's state for shipping surcharge
+        """
+        items_list = list(self.items())
+        subtotal = sum(Decimal(i['price']) * i['quantity'] for i in items_list)
+        
+        # Calculate shipping dynamically
+        shipping_calc = calculate_shipping(
+            items_list,
+            shipping_method=shipping_method,
+            destination_state=destination_state,
+            cart_subtotal=subtotal
+        )
+        shipping = shipping_calc['cost']
+        
         total = subtotal + shipping
-        return {'subtotal': subtotal, 'shipping': shipping, 'total': total}
+        return {
+            'subtotal': subtotal,
+            'shipping': shipping,
+            'total': total,
+            'shipping_method': shipping_method,
+            'shipping_breakdown': shipping_calc.get('breakdown', {}),
+        }

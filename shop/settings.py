@@ -87,9 +87,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'profile',
             'email',
         ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
         'APP': {
-            'client_id': 'YOUR_GOOGLE_CLIENT_ID',
-            'secret': 'YOUR_GOOGLE_CLIENT_SECRET',
+            'client_id': os.getenv('GOOGLE_OAUTH_CLIENT_ID', ''),
+            'secret': os.getenv('GOOGLE_OAUTH_CLIENT_SECRET', ''),
             'key': ''
         }
     },
@@ -102,19 +105,50 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'auth_type': 'reauthenticate'
         },
-        'APP': {
-            'client_id': 'YOUR_FACEBOOK_CLIENT_ID',
-            'secret': 'YOUR_FACEBOOK_CLIENT_SECRET',
-            'key': ''
+        'INIT_PARAMS': {
+            'cookie': True
         },
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
         'EXCHANGE_TOKEN': True,
         'VERIFIED_EMAIL': False,
-        'VERSION': 'v18.0' # Use the current API version
+        'VERSION': 'v18.0',
+        'APP': {
+            'client_id': os.getenv('FACEBOOK_OAUTH_CLIENT_ID', ''),
+            'secret': os.getenv('FACEBOOK_OAUTH_CLIENT_SECRET', ''),
+            'key': ''
+        }
     }
 }
 
 LOGIN_REDIRECT_URL = "core:home"   # where users go after login
 LOGOUT_REDIRECT_URL = "core:home"  # where users go after logout
+
+# Django-allauth configuration
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Allow login with email
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Can be 'mandatory', 'optional', or 'none'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_USERNAME_REQUIRED = False  # Optional: require username
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+SOCIALACCOUNT_AUTO_SIGNUP = True  # Automatically create user on social signup
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'optional'
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_QUERY_EMAIL = True  # Request email from provider
+SOCIALACCOUNT_STORE_TOKENS = True  # Store access tokens for later use
+SOCIALACCOUNT_ADAPTER = 'accounts.adapters.CustomSocialAccountAdapter'
 
 
 REST_FRAMEWORK = {
@@ -231,12 +265,14 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', os.getenv('EMAIL_HOST_USER'))  # Defaults to EMAIL_HOST_USER if not set
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use SMTP in production
-# Stripe settings
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
-STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
+
+# Paystack settings (set in your .env)
+PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+PAYSTACK_CALLBACK_URL = os.getenv('PAYSTACK_CALLBACK_URL')
 # Shipping settings
 SHIPPING_FLAT_RATE = 500.00  # Flat rate shipping cost in your currency
 SHIPPING_FREE_THRESHOLD = 10000.00  # Free shipping for orders above this amount
@@ -260,7 +296,3 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
     "SIGNING_KEY": SECRET_KEY,
 }
-
-ALIEXPRESS_APP_KEY = os.getenv('ALIEXPRESS_APP_KEY')
-ALIEXPRESS_APP_SECRET = os.getenv('ALIEXPRESS_APP_SECRET')
-ALIEXPRESS_TRACKING_ID = os.getenv('ALIEXPRESS_TRACKING_ID') # Affiliate tracking ID

@@ -24,17 +24,11 @@
               </thead>
               <tbody>
                 {% for i in cart_items %}
-                  <tr data-product-id="{{ i.product.id }}" data-unit-price="{{ i.price }}">
+                  <tr>
                     <td>{{ i.product.title }}</td>
                     <td class="text-right text-nowrap">₦{{ i.price|floatformat:2|intcomma }}</td>
-                    <td class="text-center">
-                      <input type="number" class="form-control form-control-sm qty-input" 
-                             data-product-id="{{ i.product.id }}" 
-                             min="1" 
-                             value="{{ i.quantity }}" 
-                             style="width: 70px;">
-                    </td>
-                    <td class="text-right text-nowrap line-total">₦{{ i.line_total|floatformat:2|intcomma }}</td>
+                    <td class="text-center">{{ i.quantity }}</td>
+                    <td class="text-right text-nowrap">₦{{ i.line_total|floatformat:2|intcomma }}</td>
                     <td class="text-center">
                       <a class="btn btn-sm btn-outline-danger"
                         href="{% url 'orders:cart_remove' i.product.id %}">
@@ -51,11 +45,6 @@
                 {% endfor %}
               </tbody>
             </table>
-          </div>
-          <div class="p-3 bg-light">
-            <button type="button" class="btn btn-sm btn-primary" id="update-cart-btn">
-              Update Cart
-            </button>
           </div>
         </div>
       </div>
@@ -94,125 +83,6 @@
 
 {% block scripts %}
 <script>
-const baseShipping = parseFloat('{{ totals.shipping|floatformat:2 }}');
-
-// Format currency with ₦ and comma separators
-function formatCurrency(amount) {
-  return '₦' + parseFloat(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
-// Calculate subtotal from all quantity inputs
-function calculateSubtotal() {
-  let subtotal = 0;
-  document.querySelectorAll('tr[data-product-id]').forEach(row => {
-    const unitPrice = parseFloat(row.getAttribute('data-unit-price'));
-    const qtyInput = row.querySelector('.qty-input');
-    const qty = parseInt(qtyInput.value) || 0;
-    subtotal += unitPrice * qty;
-  });
-  return subtotal;
-}
-
-// Update display totals on the page
-function updateDisplayTotals() {
-  const subtotal = calculateSubtotal();
-  const shipping = baseShipping;
-  const total = subtotal + shipping;
-  
-  document.getElementById('subtotal-display').textContent = formatCurrency(subtotal);
-  document.getElementById('shipping-display').textContent = formatCurrency(shipping);
-  document.getElementById('total-display').textContent = formatCurrency(total);
-}
-
-// Update line total for a specific product row
-function updateLineTotalDisplay(row) {
-  const unitPrice = parseFloat(row.getAttribute('data-unit-price'));
-  const qtyInput = row.querySelector('.qty-input');
-  const qty = parseInt(qtyInput.value) || 0;
-  const lineTotal = unitPrice * qty;
-  const lineTotalCell = row.querySelector('.line-total');
-  lineTotalCell.textContent = formatCurrency(lineTotal);
-}
-
-// Update all line totals when quantities change
-function updateAllLineTotals() {
-  document.querySelectorAll('tr[data-product-id]').forEach(row => {
-    updateLineTotalDisplay(row);
-  });
-  updateDisplayTotals();
-}
-
-// Handle quantity input changes (for live preview)
-document.querySelectorAll('.qty-input').forEach(input => {
-  input.addEventListener('input', function() {
-    let newQty = parseInt(this.value);
-    
-    // Only update display if valid number
-    if (!isNaN(newQty) && newQty > 0) {
-      const row = this.closest('tr[data-product-id]');
-      updateLineTotalDisplay(row);
-      updateDisplayTotals();
-    }
-  });
-  
-  // Reset invalid values on blur
-  input.addEventListener('blur', function() {
-    let newQty = parseInt(this.value);
-    if (isNaN(newQty) || newQty < 1) {
-      this.value = 1;
-      updateAllLineTotals();
-    }
-  });
-});
-
-// Update Cart button handler - send all quantities to server
-document.getElementById('update-cart-btn')?.addEventListener('click', function() {
-  const updates = [];
-  let hasInvalidQty = false;
-  
-  document.querySelectorAll('.qty-input').forEach(input => {
-    const productId = parseInt(input.getAttribute('data-product-id'));
-    let newQty = parseInt(input.value);
-    
-    if (isNaN(newQty) || newQty < 1) {
-      input.value = 1;
-      newQty = 1;
-      hasInvalidQty = true;
-    }
-    
-    updates.push({
-      product_id: productId,
-      quantity: newQty
-    });
-  });
-  
-  if (updates.length === 0) {
-    alert('Your cart is empty');
-    return;
-  }
-  
-  // Send all updates in a single request
-  fetch(`{% url 'orders:update_cart_qty' %}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': '{{ csrf_token }}'
-    },
-    body: JSON.stringify(updates)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      // Reload the page to reflect server state
-      location.reload();
-    } else {
-      alert('Error updating cart: ' + (data.message || 'Unknown error'));
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Failed to update cart');
-  });
-});
+// No additional scripts needed for basic cart
 </script>
 {% endblock %}

@@ -2,11 +2,46 @@
 {% load humanize %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<div class="jumbotron img-fluid ratio ratio-1x1" style="background-image: url('/static/img/product.jpg'); background-size: fill; background-position: center; color: white;">
-  <h2 class="display-4 jumb font-weight-bold">Your trusted online store</h2>
-  <p class="lead font-weight-bold">Curated products, fulfilled by trusted suppliers.</p>
-  <a href="{% url 'catalog:list' %}" class="btn btn-success btn-lg font-weight-bolder">Shop now</a>
+<div class="jumbotron img-fluid" style="
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/static/img/product.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: white;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+">
+  <div class="jumbotron-content">
+    <h2 class="display-4 jumb font-weight-bold">Your trusted online store</h2>
+    <p class="lead font-weight-bold">Curated products, fulfilled by trusted suppliers.</p>
+    <a href="{% url 'catalog:list' %}" class="btn btn-success btn-lg font-weight-bolder">Shop now</a>
+  </div>
 </div>
+
+<style>
+  @media (max-width: 768px) {
+    .jumbotron {
+      background-attachment: scroll !important;
+      min-height: 300px !important;
+      padding: 2rem 1rem !important;
+    }
+    .jumbotron h2 {
+      font-size: 1.75rem !important;
+    }
+    .jumbotron p {
+      font-size: 1rem !important;
+    }
+    .jumbotron .btn {
+      font-size: 0.95rem !important;
+      padding: 0.5rem 1.25rem !important;
+    }
+  }
+</style>
 
 <div class="row">
   {% for product in products %}

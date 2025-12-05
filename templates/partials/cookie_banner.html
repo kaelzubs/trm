@@ -1,4 +1,4 @@
-<div id="cookieBanner" class="fixed-bottom d-none">
+<div id="cookieBanner" class="fixed-bottom d-none" role="dialog" aria-live="polite" aria-label="Cookie banner">
   <div class="container">
     <div class="card shadow mb-3">
       <div class="card-body">
@@ -6,23 +6,104 @@
         <p class="card-text mb-2">
           We use essential cookies to make our site work. We’d also like to use optional analytics and marketing
           cookies to improve your experience. You can change your choices at any time.
-          <a href="{% url 'core:cookie_settings' %}">Cookie settings</a> | 
+          <a href="{% url 'core:cookie_settings' %}">Cookie settings</a> |
           <a href="{% url 'suppliers:privacy' %}">Privacy policy</a>
         </p>
 
-        <div class="form-inline">
-          <div class="custom-control custom-checkbox mr-3">
-            <input type="checkbox" class="custom-control-input" id="consentAnalytics">
-            <label class="custom-control-label" for="consentAnalytics">Analytics</label>
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <div class="form-check me-3">
+            <input type="checkbox" class="form-check-input" id="consentAnalytics">
+            <label class="form-check-label" for="consentAnalytics">Analytics</label>
           </div>
-          <div class="custom-control custom-checkbox mr-3">
-            <input type="checkbox" class="custom-control-input" id="consentMarketing">
-            <label class="custom-control-label" for="consentMarketing">Marketing</label>
+          <div class="form-check me-3">
+            <input type="checkbox" class="form-check-input" id="consentMarketing">
+            <label class="form-check-label" for="consentMarketing">Marketing</label>
           </div>
-          <button class="btn btn-primary mr-2" id="acceptSelected">Save choices</button>
-          <button class="btn btn-success" id="acceptAll">Accept all</button>
+          <div>
+            <button class="btn btn-outline-success me-2" id="acceptSelected">Save choices</button>
+            <button class="btn btn-success" id="acceptAll">Accept all</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+;(function(){
+  const BANNER_KEY = 'trm_cookie_consent_v1';
+  const banner = document.getElementById('cookieBanner');
+  const chkAnalytics = document.getElementById('consentAnalytics');
+  const chkMarketing = document.getElementById('consentMarketing');
+  const btnAcceptAll = document.getElementById('acceptAll');
+  const btnAcceptSelected = document.getElementById('acceptSelected');
+
+  function readConsent() {
+    try {
+      const raw = localStorage.getItem(BANNER_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveConsent(obj) {
+    try {
+      obj.updated = new Date().toISOString();
+      localStorage.setItem(BANNER_KEY, JSON.stringify(obj));
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function hideBanner() {
+    if (banner) banner.classList.add('d-none');
+  }
+
+  function showBanner() {
+    if (banner) banner.classList.remove('d-none');
+  }
+
+  function applyStoredToUI(stored) {
+    if (!stored) return;
+    if (chkAnalytics) chkAnalytics.checked = !!stored.analytics;
+    if (chkMarketing) chkMarketing.checked = !!stored.marketing;
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function(){
+    const stored = readConsent();
+    if (stored && (stored.analytics !== undefined || stored.marketing !== undefined)) {
+      // Consent previously given - hide banner and set UI
+      applyStoredToUI(stored);
+      hideBanner();
+    } else {
+      // No consent - show banner
+      showBanner();
+    }
+  });
+
+  // Accept all
+  btnAcceptAll && btnAcceptAll.addEventListener('click', function(){
+    const obj = { analytics: true, marketing: true };
+    saveConsent(obj);
+    hideBanner();
+    // Optional: trigger a custom event for other scripts
+    window.dispatchEvent(new CustomEvent('cookieConsentChanged', {detail: obj}));
+  });
+
+  // Save selected
+  btnAcceptSelected && btnAcceptSelected.addEventListener('click', function(){
+    const obj = { analytics: !!(chkAnalytics && chkAnalytics.checked), marketing: !!(chkMarketing && chkMarketing.checked) };
+    saveConsent(obj);
+    hideBanner();
+    window.dispatchEvent(new CustomEvent('cookieConsentChanged', {detail: obj}));
+  });
+
+  // Expose method to open banner (for cookie settings page)
+  window.trmCookieBanner = {
+    open: function() { showBanner(); },
+    getConsent: readConsent
+  };
+})();
+</script>

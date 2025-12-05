@@ -45,7 +45,7 @@ if DEBUG == True:
 # ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
 ALLOWED_HOSTS = ['kael.pythonanywhere.com', '127.0.0.1']
 
-# Application defini
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

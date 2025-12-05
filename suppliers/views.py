@@ -16,8 +16,8 @@ def send_to_supplier(request, order_id, supplier_id):
 def terms_and_conditions(request):
     context = {
         "last_updated": date.today().strftime("%B %d, %Y"),
-        "store_name": "YourStore",  # customize or load from settings/site config
-        "support_email": "support@yourstore.com",
+        "store_name": "TechRideMobile Ltd",  # customize or load from settings/site config
+        "support_email": "support@techridemobile.com",
         "currency_label": "USD",    # adjust for your market
         "return_window_days": 14,   # match your policy
     }
@@ -26,8 +26,8 @@ def terms_and_conditions(request):
 def privacy_policy(request):
     context = {
         "last_updated": date.today().strftime("%B %d, %Y"),
-        "store_name": "YourStore",             # customize or load from settings/site config
-        "support_email": "support@yourstore.com",
+        "store_name": "TechRideMobile Ltd",             # customize or load from settings/site config
+        "support_email": "support@techridemobile.com",
         "data_retention_months": 24,           # adjust to your policy
         "jurisdiction": "Nigeria",             # e.g., Nigeria, EU, UK, US
     }
@@ -36,8 +36,8 @@ def privacy_policy(request):
 def shipping_returns(request):
     context = {
         "last_updated": date.today().strftime("%B %d, %Y"),
-        "store_name": "YourStore",             # customize
-        "support_email": "support@yourstore.com",
+        "store_name": "TechRideMobile Ltd",             # customize
+        "support_email": "support@techridemobile.com",
         "return_window_days": 14,              # adjust to your policy
         "currency_label": "USD",               # adjust for your market
     }
@@ -69,16 +69,16 @@ def faq(request):
     context = {
         "last_updated": date.today().strftime("%B %d, %Y"),
         "faqs": faqs,
-        "store_name": "YourStore",
+        "store_name": "TechRideMobile Ltd",  # customize
     }
     return render(request, "core/faq.html", context)
 
 def about_us(request):
     context = {
         "last_updated": date.today().strftime("%B %d, %Y"),
-        "store_name": "YourStore",  # customize
+        "store_name": "TechRideMobile Ltd",  # customize
         "mission": "To connect customers with quality products at affordable prices through a seamless dropshipping model.",
         "vision": "To become a trusted global e‑commerce brand that empowers customers with choice and convenience.",
-        "support_email": "support@yourstore.com",
+        "support_email": "support@techridemobile.com",
     }
     return render(request, "core/about_us.html", context)

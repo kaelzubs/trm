@@ -273,6 +273,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
 PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
 PAYSTACK_CALLBACK_URL = os.getenv('PAYSTACK_CALLBACK_URL')
+PAYSTACK_PAYMENT_URL = os.getenv('PAYSTACK_PAYMENT_URL')
 # Shipping settings
 SHIPPING_FLAT_RATE = 500.00  # Flat rate shipping cost in your currency
 SHIPPING_FREE_THRESHOLD = 10000.00  # Free shipping for orders above this amount

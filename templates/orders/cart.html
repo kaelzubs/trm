@@ -58,6 +58,15 @@
         </div>
         <div class="card-body">
           <p class="d-flex justify-content-between">
+            <span><strong>Items Ordered:</strong></span>
+            <span>{{ items_count }}</span>
+          </p>
+          <p class="d-flex justify-content-between">
+            <span><strong>Item Value:</strong></span>
+            <span>₦{{ item_value|floatformat:2|intcomma }}</span>
+          </p>
+          <hr>
+          <p class="d-flex justify-content-between">
             <span><strong>Subtotal:</strong></span>
             <span id="subtotal-display">₦{{ totals.subtotal|floatformat:2|intcomma }}</span>
           </p>

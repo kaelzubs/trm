@@ -24,12 +24,18 @@ def cart_detail(request):
     items = list(cart.items())
     shipping_options = get_all_shipping_options(items, destination_state=None, cart_subtotal=Decimal('0'))
     
+    # Calculate items count and item value
+    items_count = sum(item['quantity'] for item in items)
+    item_value = sum(item['line_total'] for item in items)
+    
     return render(request, 'orders/cart.html', {
         'cart_items': items,
         'totals': cart.totals(),
         "cart_count": len(cart),
         "cart": cart,
         'shipping_options': shipping_options,
+        'items_count': items_count,
+        'item_value': item_value,
     })
 
 def cart_add(request, product_id):

@@ -61,10 +61,18 @@
                     <span class="info-label">Status:</span>
                     <span class="info-value" style="color: #28a745; font-weight: bold;">{{ order.get_status_display }}</span>
                 </div>
-                    <div class="info-row">
-                        <span class="info-label">Order Title:</span>
-                        <span class="info-value">{{ order_title }}</span>
-                    </div>
+                <div class="info-row">
+                    <span class="info-label">Order Title:</span>
+                    <span class="info-value">{{ order_title }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Items Ordered:</span>
+                    <span class="info-value">{{ total_items }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Item Value:</span>
+                    <span class="info-value">₦{{ total_item_value|floatformat:2 }}</span>
+                </div>
             </div>
             
             <!-- Order Items -->

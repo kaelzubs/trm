@@ -19,6 +19,8 @@ ORDER INFORMATION
 Order ID: #{{ order.pk }}
 Order Date: {{ order.created_at|date:"F j, Y \a\t g:i A" }}
 Status: {{ order.get_status_display }}
+Items Ordered: {{ total_items }}
+Item Value: ₦{{ total_item_value|floatformat:2 }}
 
 CUSTOMER INFORMATION
 ====================

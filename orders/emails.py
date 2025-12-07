@@ -39,6 +39,8 @@ def send_order_confirmation_email(order):
     try:
         # Prepare context for email template
         order_title = _get_order_title(order)
+        total_items = order.get_total_items()
+        total_item_value = order.get_total_item_value()
         context = {
             'order': order,
             'order_items': order.items.all(),
@@ -48,6 +50,8 @@ def send_order_confirmation_email(order):
             'order_subtotal': order.subtotal,
             'shipping_cost': order.shipping_cost,
             'shipping_address': order.shipping_address,
+            'total_items': total_items,
+            'total_item_value': total_item_value,
             'site_name': 'TechRideMobile',
             'support_email': settings.DEFAULT_FROM_EMAIL,
         }
@@ -238,6 +242,8 @@ def send_admin_order_notification_email(order, event_type='created'):
         
         # Prepare context for email template
         order_title = _get_order_title(order)
+        total_items = order.get_total_items()
+        total_item_value = order.get_total_item_value()
         context = {
             'order': order,
             'order_items': order.items.all(),
@@ -249,6 +255,8 @@ def send_admin_order_notification_email(order, event_type='created'):
             'order_subtotal': order.subtotal,
             'shipping_cost': order.shipping_cost,
             'shipping_address': order.shipping_address,
+            'total_items': total_items,
+            'total_item_value': total_item_value,
             'event_type': event_type,
             'site_name': 'TechRideMobile',
             'site_admin_url': getattr(settings, 'SITE_ADMIN_URL', '/admin/'),

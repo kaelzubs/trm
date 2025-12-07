@@ -43,6 +43,14 @@ class Order(models.Model):
 
     def __str__(self): return f'Order #{self.pk}'
     
+    def get_total_items(self):
+        """Return total quantity of items in the order."""
+        return sum(item.quantity for item in self.items.all())
+    
+    def get_total_item_value(self):
+        """Return sum of all line totals (subtotal of items)."""
+        return sum(item.line_total() for item in self.items.all())
+    
     def save(self, *args, **kwargs):
         """Automatically populate customer details from shipping address if not already set."""
         if not self.customer_full_name and self.shipping_address:

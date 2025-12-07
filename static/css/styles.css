@@ -76,6 +76,22 @@ main {
   margin-left: 4px;
 }
 
+/* Global image rules - ensure no overflow */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Containers with images */
+.image-container,
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  overflow: hidden;
+}
+
 /* Product cards */
 .product-card {
   border: 1px solid #e0e0e0;
@@ -83,6 +99,7 @@ main {
   margin-bottom: 20px;
   transition: transform 0.2s ease;
   background: #fff;
+  overflow: hidden;
 }
 
 .product-card:hover {
@@ -93,6 +110,9 @@ main {
   max-width: 100%;
   height: auto;
   border-bottom: 1px solid #eee;
+  display: block;
+  width: 100%;
+  object-fit: cover;
 }
 
 /* Buttons */
@@ -227,6 +247,8 @@ main {
   aspect-ratio: 1/1;   /* keeps them square */
   object-fit: cover;   /* crops neatly */
   border-radius: 6px;
+  display: block;
+  overflow: hidden;
 }
 
 .placeholder {
@@ -248,11 +270,15 @@ main {
 }
 
 .item-placeholder {
+  background: #f5f5f5;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #777;
-  background: #f5f5f5;
+  color: #999;
+  min-height: 150px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .item-label {

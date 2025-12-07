@@ -39,6 +39,7 @@ class Cart:
         for p in products:
             data = self.cart[str(p.id)]
             yield {
+                'title': data['title'],
                 'product': p,
                 'quantity': data['quantity'],
                 'price': Decimal(data['price']),

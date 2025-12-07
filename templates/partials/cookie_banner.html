@@ -72,7 +72,7 @@
   }
 
   .cookie-banner-overlay.d-none {
-    animation: fadeOut 0.3s ease-out forwards;
+    display: none !important;
   }
 
   .cookie-banner {
@@ -88,11 +88,12 @@
   }
 
   .cookie-banner.d-none {
-    animation: slideDown 0.3s ease-out forwards;
-    pointer-events: none;
+    display: none !important;
   }
 
-  @media (max-width: 576px) {
+  .cookie-banner-overlay.d-none {
+    display: none !important;
+  }
     .cookie-banner {
       max-width: calc(100% - 16px);
       bottom: 8px;
@@ -329,11 +330,6 @@
   function hideBanner() {
     if (banner) banner.classList.add('d-none');
     if (overlay) overlay.classList.add('d-none');
-    // Remove animation classes for next show
-    setTimeout(() => {
-      if (banner) banner.classList.remove('d-none');
-      if (overlay) overlay.classList.remove('d-none');
-    }, 300);
   }
 
   function showBanner() {

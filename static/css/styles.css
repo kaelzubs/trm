@@ -40,6 +40,33 @@ body {
   flex-direction: column;
 }
 
+/* Style all anchor tags with success color (excluding buttons) */
+a:not(.btn):not(.btn-outline-secondary):not(.btn-success):not([class*="btn"]) {
+  color: #28a745;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:not(.btn):not(.btn-outline-secondary):not(.btn-success):not([class*="btn"]):hover {
+  color: #218838;
+  text-decoration: underline;
+}
+
+a:not(.btn):not(.btn-outline-secondary):not(.btn-success):not([class*="btn"]):visited {
+  color: #20c997;
+}
+
+/* Style input borders to green on focus (click) */
+input:focus,
+input.form-control:focus,
+textarea:focus,
+textarea.form-control:focus,
+select:focus,
+select.form-control:focus {
+  border-color: #28a745 !important;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+}
+
 main {
   flex: 1;   /* pushes footer down */
   padding-top: 25px;

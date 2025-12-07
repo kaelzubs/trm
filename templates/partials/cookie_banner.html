@@ -1,6 +1,6 @@
 <div id="cookieBannerOverlay" class="cookie-banner-overlay d-none"></div>
 
-<div id="cookieBanner" class="cookie-banner d-none" role="dialog" aria-live="polite" aria-label="Cookie banner">
+<div id="cookieBanner" class="cookie-banner d-none container p-3" role="dialog" aria-live="polite" aria-label="Cookie banner">
   <div class="cookie-banner-content">
     <button class="cookie-banner-close" id="closeBanner" aria-label="Close cookie banner">&times;</button>
     
@@ -15,7 +15,7 @@
       We use cookies to enhance your browsing experience. Some are essential for the site to function, while others help us improve your experience and provide personalized content.
     </p>
 
-    <div class="cookie-options">
+    <div class="col cookie-options">
       <div class="cookie-option">
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="consentEssential" disabled checked>
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="cookie-option">
+      <div class="col cookie-option">
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="consentAnalytics">
           <label class="form-check-label" for="consentAnalytics">
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div class="cookie-option">
+      <div class="col cookie-option">
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="consentMarketing">
           <label class="form-check-label" for="consentMarketing">
@@ -237,6 +237,13 @@
     border-radius: 6px;
     font-weight: 500;
     transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cookie-banner-actions .btn:active {
+    transform: scale(0.98);
   }
 
   .cookie-banner-actions .btn-outline-secondary {
@@ -249,12 +256,32 @@
     border-color: #bbb;
   }
 
+  .cookie-banner-actions .btn-outline-secondary:active {
+    background-color: #e8e8e8;
+    border-color: #aaa;
+  }
+
   .cookie-banner-actions .btn-success {
     color: white;
   }
 
   .cookie-banner-actions .btn-success:hover {
     background-color: #218838;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  }
+
+  .cookie-banner-actions .btn-success:active {
+    background-color: #1e7e34;
+    box-shadow: 0 1px 4px rgba(40, 167, 69, 0.2);
+  }
+
+  .cookie-option .form-check-input:hover {
+    border-color: #28a745;
+    cursor: pointer;
+  }
+
+  .cookie-option .form-check-label:hover {
+    color: #1a1a1a;
   }
 
   @keyframes slideUp {
@@ -343,6 +370,19 @@
     if (chkMarketing) chkMarketing.checked = !!stored.marketing;
   }
 
+  function addClickFeedback(button) {
+    if (!button) return;
+    button.addEventListener('mousedown', function() {
+      button.style.transform = 'scale(0.98)';
+    });
+    button.addEventListener('mouseup', function() {
+      button.style.transform = 'scale(1)';
+    });
+    button.addEventListener('mouseleave', function() {
+      button.style.transform = 'scale(1)';
+    });
+  }
+
   // Initialize
   document.addEventListener('DOMContentLoaded', function(){
     const stored = readConsent();
@@ -354,27 +394,41 @@
       // No consent - show banner
       showBanner();
     }
+    
+    // Add click feedback to buttons
+    addClickFeedback(btnAcceptAll);
+    addClickFeedback(btnAcceptSelected);
+    addClickFeedback(btnCloseBanner);
   });
 
   // Accept all
-  btnAcceptAll && btnAcceptAll.addEventListener('click', function(){
+  btnAcceptAll && btnAcceptAll.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    btnAcceptAll.disabled = true;
     const obj = { analytics: true, marketing: true };
     saveConsent(obj);
     hideBanner();
-    // Optional: trigger a custom event for other scripts
     window.dispatchEvent(new CustomEvent('cookieConsentChanged', {detail: obj}));
+    setTimeout(() => { btnAcceptAll.disabled = false; }, 300);
   });
 
   // Save selected
-  btnAcceptSelected && btnAcceptSelected.addEventListener('click', function(){
+  btnAcceptSelected && btnAcceptSelected.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    btnAcceptSelected.disabled = true;
     const obj = { analytics: !!(chkAnalytics && chkAnalytics.checked), marketing: !!(chkMarketing && chkMarketing.checked) };
     saveConsent(obj);
     hideBanner();
     window.dispatchEvent(new CustomEvent('cookieConsentChanged', {detail: obj}));
+    setTimeout(() => { btnAcceptSelected.disabled = false; }, 300);
   });
 
   // Close button
-  btnCloseBanner && btnCloseBanner.addEventListener('click', function(){
+  btnCloseBanner && btnCloseBanner.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
     const obj = { analytics: false, marketing: false };
     saveConsent(obj);
     hideBanner();
@@ -384,6 +438,8 @@
   // Close overlay click
   overlay && overlay.addEventListener('click', function(e){
     if (e.target === overlay) {
+      e.preventDefault();
+      e.stopPropagation();
       hideBanner();
     }
   });

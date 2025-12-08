@@ -111,9 +111,15 @@ img {
 }
 
 /* Containers with images */
+.image-container {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
 .image-container,
 .image-container img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
   object-fit: contain;
   overflow: hidden;
@@ -665,6 +671,15 @@ h2.jumb {
     width: 100%;  /* Set a fixed width */
     height: auto; /* Set a fixed height */
   }
+}
+
+.card-img-top {
+  width: 100%;        /* Fill full width of card */
+  height: auto;      /* Set a fixed height */
+  object-fit: contain;  /* Crop to fill div */
+  margin: 0 auto;  /* Center the image */
+  padding-right: 8px;
+  display: block;
 }
 
 @media (max-width: 576px) {

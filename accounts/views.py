@@ -143,6 +143,10 @@ def jwt_login(request):
                 if user.is_active:
                     # Issue JWT tokens
                     login(request, user)
+                    # Get the 'next' parameter from GET or POST
+                    next_url = request.POST.get('next') or request.GET.get('next')
+                    if next_url:
+                        return redirect(next_url)
                     return redirect("core:home")  # replace with your dashboard/home
                 else:
                     messages.error(request, "Your email is not verified. Please check your inbox.")
@@ -151,7 +155,9 @@ def jwt_login(request):
     else:
         form = LoginForm()
 
-    return render(request, "accounts/login.html", {"form": form})
+    # Pass the 'next' parameter to the template context
+    next_url = request.GET.get('next', '')
+    return render(request, "accounts/login.html", {"form": form, "next": next_url})
 
 
 def logout_template(request):

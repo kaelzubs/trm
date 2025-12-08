@@ -297,3 +297,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
     "SIGNING_KEY": SECRET_KEY,
 }
+
+# Login settings - redirect to login with 'next' parameter
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:home'

@@ -38,7 +38,6 @@ Phone: {{ shipping_address.phone }}
 ORDER ITEMS
 ===========
 {% for item in order_items %}
-  title: {{ item.product.title }}
   title: {{ item.title }}
   Quantity: {{ item.inventory }}
   Unit Price: ₦{{ item.unit_price|floatformat:2 }}

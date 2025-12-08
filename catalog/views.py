@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def category_list(request, category_slug=None):
     category = None
     products = Product.objects.all()
@@ -31,7 +34,7 @@ def category_list(request, category_slug=None):
         'page_obj': page_obj
     })
 
-
+@login_required
 def product_list(request, category_slug=None):
     category = None
     products = Product.objects.all()
@@ -55,11 +58,12 @@ def product_list(request, category_slug=None):
 
     return render(request, 'catalog/list.html', {'products': products, 'categories': categories, 'page_obj': page_obj, 'category': category})
 
+@login_required
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
     return render(request, 'catalog/detail.html', {'product': product})
 
-
+@login_required
 def search_product(request):
     query = request.GET.get("q", "")
     products = Product.objects.all()

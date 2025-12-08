@@ -13,11 +13,13 @@ from django.http import HttpResponseRedirect, JsonResponse
 from shop.payments.paystack import initialize_transaction, verify_transaction
 from orders.shipping import get_all_shipping_options
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
+@login_required
 def cart_detail(request):
     cart = Cart(request)
     # Get shipping options to show on cart page
@@ -38,6 +40,7 @@ def cart_detail(request):
         'item_value': item_value,
     })
 
+@login_required
 def cart_add(request, product_id):
     cart = Cart(request)
     if request.method == 'POST':
@@ -52,6 +55,7 @@ def cart_remove(request, product_id):
     cart.remove(product_id)
     return redirect('orders:cart_detail')
 
+@login_required
 def checkout(request):
     cart = Cart(request)
     items = list(cart.items())

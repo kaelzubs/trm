@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from decimal import Decimal
 
 class Category(models.Model):
     name = models.CharField(max_length=120, unique=True)
@@ -30,11 +31,10 @@ class Product(models.Model):
     # retail price you sell at
     price = models.DecimalField(max_digits=10, decimal_places=2)
     # supplier info
-    supplier_sku = models.CharField(max_length=120, blank=True)
-    supplier_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    supplier_sku = models.CharField(max_length=100, blank=True, null=True, help_text="Supplier product SKU")
     inventory = models.IntegerField(default=0)  # optional local cache
     # shipping info
-    weight = models.DecimalField(max_digits=6, decimal_places=2, default=0.5, help_text="Weight in kg")
+    weight = models.DecimalField(max_digits=6, decimal_places=2, default=Decimal("0.5"), help_text="Weight in kg")
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -48,9 +48,6 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug: self.slug = slugify(self.title)
         super().save(*args, **kwargs)
-
-    def margin(self):
-        return self.price - self.supplier_cost
 
     def __str__(self): return self.title
 

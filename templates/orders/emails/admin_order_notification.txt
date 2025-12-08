@@ -19,8 +19,6 @@ ORDER INFORMATION
 Order ID: #{{ order.pk }}
 Order Date: {{ order.created_at|date:"F j, Y \a\t g:i A" }}
 Status: {{ order.get_status_display }}
-Items Ordered: {{ total_items }}
-Item Value: ₦{{ total_item_value|floatformat:2 }}
 
 CUSTOMER INFORMATION
 ====================
@@ -40,8 +38,9 @@ Phone: {{ shipping_address.phone }}
 ORDER ITEMS
 ===========
 {% for item in order_items %}
-{{ item.product.title }}
-  Quantity: {{ item.quantity }}
+  title: {{ item.product.title }}
+  title: {{ item.title }}
+  Quantity: {{ item.inventory }}
   Unit Price: ₦{{ item.unit_price|floatformat:2 }}
   Total: ₦{{ item.line_total|floatformat:2 }}
 

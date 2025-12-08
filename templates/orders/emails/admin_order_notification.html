@@ -125,6 +125,10 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                    <strong>Items Ordered:</strong> {{ total_items }}<br>
+                    <strong>Item Value:</strong> ₦{{ total_item_value|floatformat:2 }}
+                </div>
 
                 <!-- Order Summary -->
                 <div class="total-section">

@@ -13,11 +13,6 @@ html, body {
   box-sizing: border-box;
 }
 
-/* If using carousels or galleries */
-.more-images {
-  max-width: 100%;
-}
-
 main, .content, .container {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -196,13 +191,16 @@ img {
 
 /* More images section */
 .more-images {
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   display: flex;
-  gap: 10px;
-  padding: 10px 0;
+  gap: 5px;
+  padding: 5px 0;
   flex-wrap: wrap;
   width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .more-images img {
@@ -339,7 +337,7 @@ img {
   display: flex;
   padding-left: 15px;     /* match Bootstrap container padding */
   padding-right: 15px;    /* add equal padding on the right */
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 10px;
   margin-bottom: 15px;
   -webkit-overflow-scrolling: touch; /* smooth iOS scroll */
@@ -356,8 +354,7 @@ img {
   cursor: pointer;
   transition: transform 0.2s ease;
   border: 2px solid #28a745;
-  display: flex;
-  justify-content: left;
+  display: block;
 }
 
 .more-images img:hover {

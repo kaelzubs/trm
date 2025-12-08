@@ -22,7 +22,7 @@
         <div class="row">
           <div class="more-images d-flex">
             {% for image in product.images.all %}
-              <img id="otherImage" src="{{ image.image.url }}" class="shadow cursor-pointer mx-1" onclick="updateMainImage(this)" alt="{{ product.title }}">
+              <img id="otherImage" src="{{ image.image.url }}" class="shadow cursor-pointer" onclick="updateMainImage(this)" alt="{{ product.title }}">
             {% endfor %}
           </div>
         </div>

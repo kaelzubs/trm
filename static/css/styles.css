@@ -49,7 +49,6 @@ a:not(.btn):not(.btn-outline-secondary):not(.btn-success):not([class*="btn"]) {
 
 a:not(.btn):not(.btn-outline-secondary):not(.btn-success):not([class*="btn"]):hover {
   color: #218838;
-  text-decoration: underline;
 }
 
 a:not(.btn):not(.btn-outline-secondary):not(.btn-success):not([class*="btn"]):visited {

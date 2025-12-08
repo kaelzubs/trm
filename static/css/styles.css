@@ -638,6 +638,14 @@ h2.jumb {
     display: none;
 }
 
+.logo {
+    width: 200px;
+    height: auto;
+    margin-top: -30px;
+    margin-left: -35px;
+    margin-bottom: -30px;
+}
+
 /* Media query for screens larger than 767px (Desktop/Tablet view) */
 @media screen and (min-width: 768px) {
     .mobile-only {

@@ -136,13 +136,13 @@ LOGIN_REDIRECT_URL = "core:home"   # where users go after login
 LOGOUT_REDIRECT_URL = "core:home"  # where users go after logout
 
 # Django-allauth configuration
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Allow login with email
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Can be 'mandatory', 'optional', or 'none'
-ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_USERNAME_REQUIRED = False  # Optional: require username
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Allow login with email
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Can be 'mandatory', 'optional', or 'none'
+# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+# ACCOUNT_USERNAME_REQUIRED = False  # Optional: require username
+# ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
 SOCIALACCOUNT_AUTO_SIGNUP = True  # Automatically create user on social signup
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'optional'
 SOCIALACCOUNT_EMAIL_REQUIRED = True
@@ -301,3 +301,6 @@ SIMPLE_JWT = {
 # Login settings - redirect to login with 'next' parameter
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'core:home'
+
+ACCOUNT_LOGIN_METHODS = {'email'} # Or {'username', 'email'} if you allow both
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*'] # For email/password signup

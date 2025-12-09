@@ -743,6 +743,19 @@ h2.jumb {
   display: block;
 }
 
+/* Change the border color for the default state */
+.blink {
+  border: 1px solid #28a745; /* A standard green color. Adjust the HEX value as needed. */
+}
+
+/* Change the border color on hover and focus states for better user experience */
+.blink:hover,
+.blink:focus,
+.blink:active {
+  border-color: #218838; /* A slightly darker green for interaction states */
+}
+
+
 /* Responsive tweaks */
 /* @media (max-width: 900px) {
   .category-gallery {

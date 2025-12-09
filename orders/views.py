@@ -120,8 +120,7 @@ def checkout(request):
                 # Paystack returns an authorization_url to redirect the customer to
                 auth_url = init.get('authorization_url')
                 # Store the returned reference on the order for later verification (reuse stripe_payment_intent field)
-                order.stripe_payment_intent = init.get('reference') or ''
-                order.save()
+                
                 return HttpResponseRedirect(auth_url)
             except Exception as e:
                 messages.error(request, f"Payment initialization failed: {e}")
@@ -133,7 +132,7 @@ def checkout(request):
         items = list(cart.items())
         subtotal = sum(Decimal(str(item['price'])) * item['quantity'] for item in items)
         shipping_options = get_all_shipping_options(items, destination_state, subtotal)
-        order_items = OrderItem.objects.filter(order=order) if 'order' in locals() else []
+        order_items = OrderItem.objects.filter(order=order)
 
     return render(request, 'orders/checkout.html', {
         'form': form,

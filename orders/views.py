@@ -101,8 +101,6 @@ def checkout(request):
                 OrderItem.objects.create(
                     order=order, product=i['product'], quantity=i['quantity'], unit_price=i['price']
                 )
-            
-            order_items = OrderItem.objects.filter(order=order)
 
             # Initialize a Paystack transaction and redirect the user
             try:
@@ -135,6 +133,7 @@ def checkout(request):
         items = list(cart.items())
         subtotal = sum(Decimal(str(item['price'])) * item['quantity'] for item in items)
         shipping_options = get_all_shipping_options(items, destination_state, subtotal)
+        order_items = OrderItem.objects.filter(order=order) if 'order' in locals() else []
 
     return render(request, 'orders/checkout.html', {
         'form': form,

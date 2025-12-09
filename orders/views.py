@@ -132,7 +132,7 @@ def checkout(request):
         items = list(cart.items())
         subtotal = sum(Decimal(str(item['price'])) * item['quantity'] for item in items)
         shipping_options = get_all_shipping_options(items, destination_state, subtotal)
-        order_items = OrderItem.objects.filter(order=order)
+        order_items = OrderItem.objects.all()
 
     return render(request, 'orders/checkout.html', {
         'form': form,

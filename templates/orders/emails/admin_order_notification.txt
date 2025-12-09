@@ -43,13 +43,6 @@ Quantity: {{ item.quantity }}
 Unit Price: ₦{{ item.unit_price|floatformat:2 }}
 Total: ₦{{ item.line_total|floatformat:2 }}
 
-ORDER ITEMS
-===========
-Product: {{ order_items.title }}
-Quantity: {{ order_items.quantity }}
-Unit Price: ₦{{ order_items.unit_price|floatformat:2 }}
-Total: ₦{{ order_items.line_total|floatformat:2 }}
-
 {% endfor %}
 Items Ordered: {{ total_items }}
 Item Value: ₦{{ total_item_value|floatformat:2 }}

@@ -755,6 +755,17 @@ h2.jumb {
   border-color: #218838; /* A slightly darker green for interaction states */
 }
 
+.btn-link {
+  border-color: #5cb85c; /* Example of a greenish color */
+  border-style: solid; /* Ensure a visible border */
+  border-width: 1px; /* Adjust border thickness as needed */
+}
+
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active {
+  border-color: #4cae4c; /* A slightly different shade for interaction states */
+}
 
 /* Responsive tweaks */
 /* @media (max-width: 900px) {

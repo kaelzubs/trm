@@ -743,43 +743,6 @@ h2.jumb {
   display: block;
 }
 
-/* Change the border color for the default state */
-.blink {
-  border: 1px solid #28a745; /* A standard green color. Adjust the HEX value as needed. */
-}
-
-/* Change the border color on hover and focus states for better user experience */
-.blink:hover,
-.blink:focus,
-.blink:active {
-  border-color: #218838; /* A slightly darker green for interaction states */
-}
-
-.btn-link {
-  border-color: #5cb85c; /* Example of a greenish color */
-  border-style: solid; /* Ensure a visible border */
-  border-width: 1px; /* Adjust border thickness as needed */
-}
-
-.btn-link:hover,
-.btn-link:focus,
-.btn-link:active {
-  border-color: #4cae4c; /* A slightly different shade for interaction states */
-}
-
-/* Responsive tweaks */
-/* @media (max-width: 900px) {
-  .category-gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-} */
-
-/* @media (max-width: 540px) {
-  .category-gallery {
-    grid-template-columns: 6fr;
-  }
-} */
-
 
 
 

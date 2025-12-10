@@ -37,7 +37,14 @@ Phone: {{ shipping_address.phone }}
 
 ORDER ITEMS
 ===========
-{% for item in items %}
+Product: {{ order.title }}
+Quantity: {{ order.quantity }}
+Unit Price: ₦{{ order.unit_price|floatformat:2 }}
+Total: ₦{{ order.line_total|floatformat:2 }}
+
+ORDER ITEMS
+===========
+{% for item in order_items %}
 Product: {{ item.product.title }}
 Quantity: {{ item.quantity }}
 Unit Price: ₦{{ item.unit_price|floatformat:2 }}

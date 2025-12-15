@@ -143,7 +143,6 @@ def checkout(request):
         'totals': totals,
         'shipping_options': shipping_options,
         'selected_shipping_method': shipping_method,
-        'order_items': Order.objects.all(),
 
     })
 

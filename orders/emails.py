@@ -7,7 +7,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 def _get_order_title(order):
     """Generate a short human-friendly title for an order.
 
@@ -17,7 +16,7 @@ def _get_order_title(order):
     - If multiple items, return "<qty>x <first product title> +N more"
     """
     try:
-        items = list(Order.objects.filter(order=order))
+        items = list(order.items.all())
         if not items:
             return f"Order #{order.pk}"
         first = items[0]
@@ -43,7 +42,7 @@ def send_order_confirmation_email(order):
         total_item_value = order.get_total_item_value()
         context = {
             'order': order,
-            'order_items': Order.objects.filter(order=order),
+            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'order_total': order.total,
@@ -88,6 +87,7 @@ def send_payment_received_email(order):
         order_title = _get_order_title(order)
         context = {
             'order': order,
+            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'order_total': order.total,
@@ -124,7 +124,7 @@ def send_order_shipped_email(order, tracking_number=None):
         order_title = _get_order_title(order)
         context = {
             'order': order,
-            'order_items': Order.objects.filter(order=order),
+            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'tracking_number': tracking_number or order.tracking_number,
@@ -161,6 +161,7 @@ def send_order_delivered_email(order):
     try:
         context = {
             'order': order,
+            'order_items': order.items.all(),
             'customer_name': order.customer_full_name or order.email,
             'order_number': order.pk,
             'site_name': 'TechRideMobile',
@@ -195,6 +196,7 @@ def send_order_cancelled_email(order, reason=''):
         order_title = _get_order_title(order)
         context = {
             'order': order,
+            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'order_number': order.pk,
@@ -246,7 +248,7 @@ def send_admin_order_notification_email(order, event_type='created'):
         total_item_value = order.get_total_item_value()
         context = {
             'order': order,
-            'order_items': Order.objects.filter(order=order),
+            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'customer_email': order.email,

@@ -7,6 +7,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def _get_order_title(order):
     """Generate a short human-friendly title for an order.
 
@@ -87,7 +88,6 @@ def send_payment_received_email(order):
         order_title = _get_order_title(order)
         context = {
             'order': order,
-            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'order_total': order.total,
@@ -161,7 +161,6 @@ def send_order_delivered_email(order):
     try:
         context = {
             'order': order,
-            'order_items': order.items.all(),
             'customer_name': order.customer_full_name or order.email,
             'order_number': order.pk,
             'site_name': 'TechRideMobile',
@@ -196,7 +195,6 @@ def send_order_cancelled_email(order, reason=''):
         order_title = _get_order_title(order)
         context = {
             'order': order,
-            'order_items': order.items.all(),
             'order_title': order_title,
             'customer_name': order.customer_full_name or order.email,
             'order_number': order.pk,

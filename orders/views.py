@@ -99,7 +99,10 @@ def checkout(request):
             )
             for i in items:
                 OrderItem.objects.create(
-                    order=order, product=i['product'], quantity=i['quantity'], unit_price=i['price']
+                    order=order,
+                    product=i['product'],
+                    quantity=i['quantity'],
+                    unit_price=i['price'],
                 )
 
             # Initialize a Paystack transaction and redirect the user
@@ -108,7 +111,6 @@ def checkout(request):
                 # Get customer details from the address
                 full_name = addr.full_name
                 phone_number = addr.phone
-                order_items = order.objects.all()
                 
                 init = initialize_transaction(
                     totals['total'],
@@ -116,13 +118,13 @@ def checkout(request):
                     reference=f"order_{order.pk}",
                     callback_url=callback,
                     full_name=full_name,
-                    phone_number=phone_number,
-                    order_items,
+                    phone_number=phone_number
                 )
                 # Paystack returns an authorization_url to redirect the customer to
                 auth_url = init.get('authorization_url')
                 # Store the returned reference on the order for later verification (reuse stripe_payment_intent field)
-                
+                # order.stripe_payment_intent = init.get('reference') or ''
+                order.save()
                 return HttpResponseRedirect(auth_url)
             except Exception as e:
                 messages.error(request, f"Payment initialization failed: {e}")
@@ -141,6 +143,8 @@ def checkout(request):
         'totals': totals,
         'shipping_options': shipping_options,
         'selected_shipping_method': shipping_method,
+        'order_items': Order.objects.all(),
+
     })
 
 def order_success(request, order_id):
@@ -233,3 +237,50 @@ def verify_paystack(request):
     else:
         messages.error(request, 'Payment not successful.')
         return redirect('orders:checkout')
+
+
+def update_cart_qty(request):
+    """
+    AJAX endpoint to update cart item quantity.
+    Accepts both single updates and bulk updates.
+    Single: POST with JSON: {'product_id': int, 'quantity': int}
+    Bulk: POST with JSON: [{'product_id': int, 'quantity': int}, ...]
+    Returns JSON response with success status.
+    """
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Only POST allowed'}, status=405)
+    
+    try:
+        import json
+        data = json.loads(request.body)
+        cart = Cart(request)
+        
+        # Handle both single and bulk updates
+        updates = data if isinstance(data, list) else [data]
+        
+        for update in updates:
+            product_id = int(update.get('product_id'))
+            new_qty = int(update.get('quantity'))
+            
+            if new_qty < 1:
+                return JsonResponse({'success': False, 'message': f'Quantity for product {product_id} must be at least 1'})
+            
+            # Get the product to verify it exists
+            product = Product.objects.get(id=product_id)
+            
+            # Update quantity in cart
+            if str(product_id) in cart.cart:
+                cart.cart[str(product_id)]['quantity'] = new_qty
+            else:
+                return JsonResponse({'success': False, 'message': f'Product {product_id} not in cart'})
+        
+        # Save cart after all updates
+        cart.save()
+        return JsonResponse({'success': True, 'message': 'Quantities updated successfully'})
+    
+    except Product.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Product not found'})
+    except (ValueError, json.JSONDecodeError) as e:
+        return JsonResponse({'success': False, 'message': f'Invalid request: {str(e)}'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Error: {str(e)}'})

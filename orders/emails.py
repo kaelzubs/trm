@@ -7,7 +7,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 def _get_order_title(order):
     """Generate a short human-friendly title for an order.
 

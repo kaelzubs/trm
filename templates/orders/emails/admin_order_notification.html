@@ -115,12 +115,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for item in order %}
                         <tr>
-                            <td>{{ order.product.title }}</td>
-                            <td>{{ order.quantity }}</td>
-                            <td>₦{{ order.unit_price|floatformat:2 }}</td>
-                            <td>₦{{ order.line_total|floatformat:2 }}</td>
+                            <td>{{ item.product.title }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>₦{{ item.unit_price|floatformat:2 }}</td>
+                            <td>₦{{ item.line_total|floatformat:2 }}</td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">

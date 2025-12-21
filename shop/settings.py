@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'core',
     'catalog',
     'orders',
-    'suppliers',
+    'policies',
     'crispy_forms',
     'crispy_bootstrap4',
     'rest_framework',

@@ -11,13 +11,10 @@ from django.core.mail import send_mail
 from django.urls import reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from rest_framework_simplejwt.tokens import RefreshToken
 from .utils.mailchimp import subscribe_user
 from rest_framework_simplejwt.tokens import AccessToken
 from .forms import CustomUserCreationForm, LoginForm, ContactForm
 from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
 
 
 User = get_user_model()
@@ -36,31 +33,6 @@ class RegisterAPIView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
-    
-# def register_template(request):
-#     if request.method == "POST":
-#         email = request.POST.get("email")
-#         username = request.POST.get("username")
-#         password = request.POST.get("password")
-
-#         user = User.objects.create_user(username=username, email=email, password=password)
-#         user.is_active = False
-#         user.save()
-
-#         token = AccessToken.for_user(user)
-#         verify_url = request.build_absolute_uri(reverse("verify_email")) + f"?token={str(token)}"
-
-#         send_mail(
-#             subject="Verify your email",
-#             message=f"Click the link to verify your account: {verify_url}",
-#             from_email="noreply@yourstore.com",
-#             recipient_list=[email],
-#         )
-
-#         return render(request, "accounts/registration_pending.html", {"email": email})
-
-#     return render(request, "accounts/register.html")
-# accounts/views.py
 
 User = get_user_model()
 

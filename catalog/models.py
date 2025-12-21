@@ -28,14 +28,8 @@ class Product(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True, blank=True)
     description = models.TextField(blank=True)
-    # retail price you sell at
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    # supplier info
-    supplier_sku = models.CharField(max_length=100, blank=True, null=True, help_text="Supplier product SKU")
-    inventory = models.IntegerField(default=0)  # optional local cache
-    # shipping info
-    weight = models.DecimalField(max_digits=6, decimal_places=2, default=Decimal("0.5"), help_text="Weight in kg")
-
+    affliliate_link = models.URLField(blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load humanize %}
-{% block title %}Cart{% endblock %}
+{% block title %}Saved Products{% endblock %}
 {% block content %}
 <div class="container-fluid">
   <div class="row">
     <!-- Cart Items -->
-    <div class="col-lg-8 mb-4">
+    <div class="col-lg-12 mb-4">
       <div class="card shadow-sm">
         <div class="card-header bg-success text-white">
-          <h3 class="mb-0">Your Cart</h3>
+          <h3 class="mb-0">Wishlist</h3>
         </div>
         <div class="card-body p-0">
           <div class="table-responsive">
@@ -17,8 +17,6 @@
                 <tr>
                   <th>Product</th>
                   <th class="text-right">Price</th>
-                  <th class="text-center">Qty</th>
-                  <th class="text-right">Total</th>
                   <th></th>
                 </tr>
               </thead>
@@ -27,8 +25,6 @@
                   <tr>
                     <td>{{ i.product.title }}</td>
                     <td class="text-right text-nowrap">₦{{ i.price|floatformat:2|intcomma }}</td>
-                    <td class="text-center">{{ i.quantity }}</td>
-                    <td class="text-right text-nowrap">₦{{ i.line_total|floatformat:2|intcomma }}</td>
                     <td class="text-center">
                       <a class="btn btn-sm btn-outline-danger"
                         href="{% url 'orders:cart_remove' i.product.id %}">
@@ -39,50 +35,13 @@
                 {% empty %}
                   <tr>
                     <td colspan="5" class="text-center text-muted py-4">
-                      Your cart is empty.
+                      Your wishlist is empty.
                     </td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cart Summary -->
-    <div class="col-lg-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-light">
-          <h5 class="mb-0">Order Summary</h5>
-        </div>
-        <div class="card-body">
-          <p class="d-flex justify-content-between">
-            <span><strong>Items Ordered:</strong></span>
-            <span>{{ items_count }}</span>
-          </p>
-          <p class="d-flex justify-content-between">
-            <span><strong>Item Value:</strong></span>
-            <span>₦{{ item_value|floatformat:2|intcomma }}</span>
-          </p>
-          <hr>
-          <p class="d-flex justify-content-between">
-            <span><strong>Subtotal:</strong></span>
-            <span id="subtotal-display">₦{{ totals.subtotal|floatformat:2|intcomma }}</span>
-          </p>
-          <p class="d-flex justify-content-between">
-            <span><strong>Shipping:</strong></span>
-            <span id="shipping-display">₦{{ totals.shipping|floatformat:2|intcomma }}</span>
-          </p>
-          <hr>
-          <p class="d-flex justify-content-between font-weight-bold">
-            <span>Total:</span>
-            <span id="total-display">₦{{ totals.total|floatformat:2|intcomma }}</span>
-          </p>
-          <a class="btn btn-success btn-block mt-3"
-             href="{% url 'orders:checkout' %}">
-            Proceed to Checkout
-          </a>
         </div>
       </div>
     </div>

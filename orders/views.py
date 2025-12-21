@@ -1,8 +1,10 @@
+from itertools import product
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .cart import Cart
 from .forms import CheckoutForm
 from .models import Order, OrderItem, Address
+from catalog.models import Product
 from .emails import send_order_confirmation_email
 from django.conf import settings
 from pathlib import Path
@@ -47,7 +49,10 @@ def cart_add(request, product_id):
         qty = int(request.POST.get('quantity', 1))
         # ✅ Fetch the actual product object
         # ✅ Pass the product object, not just the ID
-        cart.add(product_id, qty)
+        product = get_object_or_404(Product, id=product_id)
+        if str(product.id) not in cart.cart:
+            cart.add(product_id, qty)
+            
     return redirect('orders:cart_detail')
 
 def cart_remove(request, product_id):
